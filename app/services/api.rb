@@ -19,6 +19,11 @@ class Api
     def get_messages
     	@client.get do |topic, message|
     		puts "#{topic}: #{message}"
+    		store_message(message)
     	end
+    end
+
+    def store_message(message)
+		Models::HistoricalData.new(message).create_message
     end
 end
