@@ -28,7 +28,7 @@ module Models
     end
 
     def set_weather
-      WeatherService.new(@historical.id).process_weather
+      WeatherWorker.perform_async(@historical.id)
     end
   end
 end
