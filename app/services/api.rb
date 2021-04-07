@@ -24,6 +24,6 @@ class Api
     end
 
     def store_message(message)
-		Models::HistoricalData.new(message).create_message
+        Models::HistoricalData.new(message).process_message
     end
 end

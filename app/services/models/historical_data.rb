@@ -1,22 +1,34 @@
 module Models
   class HistoricalData
+    WEATHER_DEVICES = ['1_65500', '18_65500']
+
     def initialize(message)
-      @message = JSON.parse(message)
+      @message = JSON.parse(message).dig('data')
     end
 
-    def create_message
-      data = @message.dig('data')
+    def process_message
+      @historical = create_historical
+      set_weather if WEATHER_DEVICES.include?(@historical.did)
+    end
+
+    private
+
+    def create_historical
       Historical.create(
-        did: data.dig('DID'),
-        fmw: data.dig('FMW'),
-        tms: data.dig('TMS'),
-        bvol: data.dig('bvol'),
-        tem1: data.dig('tem1'),
-        hum1: data.dig('hum1'),
-        solr: data.dig('solr'),
-        stm1: data.dig('stm1'),
-        smo1: data.dig('smo1')
+        did: @message.dig('DID'),
+        fmw: @message.dig('FMW'),
+        tms: @message.dig('TMS'),
+        bvol: @message.dig('bvol'),
+        tem1: @message.dig('tem1'),
+        hum1: @message.dig('hum1'),
+        solr: @message.dig('solr'),
+        stm1: @message.dig('stm1'),
+        smo1: @message.dig('smo1')
       )
+    end
+
+    def set_weather
+      WeatherService.new(@historical.id).process_weather
     end
   end
 end
