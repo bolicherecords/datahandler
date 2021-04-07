@@ -25,10 +25,11 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
-#gem 'mqtt-rails'
 gem 'mqtt', :git => 'https://github.com/njh/ruby-mqtt.git'
 
 gem 'mongoid', '~> 6.2.0'
+
+gem 'httparty', '~> 0.16'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
